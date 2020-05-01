@@ -36,6 +36,7 @@ namespace Identity
 
             services.ConfigureApplicationCookie(r =>
             {
+                r.LoginPath = new PathString("/Home/Index");
                 r.Cookie.HttpOnly = true;
                 r.Cookie.Name = "IdentityCookie";
                 r.Cookie.SameSite = SameSiteMode.Strict;
@@ -57,7 +58,8 @@ namespace Identity
 
             app.UseRouting();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
