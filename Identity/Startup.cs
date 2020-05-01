@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Identity.Contexts;
+using Identity.CustomValidator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,14 +22,28 @@ namespace Identity
             services.AddIdentity<AppUser, AppRole>(
                 r =>
                 {
-                    //aþaðýdaki kontrolleri þifreyi 1 veye basit bir þey verip hýzlýca giriþ yapmak için ekledim yani kontrolleri esnettim
-                    r.Password.RequireDigit = false;
-                    r.Password.RequireLowercase = false;
-                    r.Password.RequiredLength = 1;
-                    r.Password.RequireNonAlphanumeric = false;
-                    r.Password.RequireUppercase = false;
+                    //aþaðýdaki kontrolleri þifreyi 1 veye basit bir þey verip hýzlýca giriþ yapmak için ekledim test için aktif edebilirsiniz
+                    //r.Password.RequireDigit = false;
+                    //r.Password.RequireLowercase = false;
+                    //r.Password.RequiredLength = 1;
+                    //r.Password.RequireNonAlphanumeric = false;
+                    //r.Password.RequireUppercase = false;
+
+                    //r.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                    //r.Lockout.MaxFailedAccessAttempts = 5;
                 }
-                ).AddEntityFrameworkStores<UdemyContext>();
+                ).AddErrorDescriber<CustomIdentityValidator>().AddPasswordValidator<CustomPasswordValidator>().AddEntityFrameworkStores<UdemyContext>();
+
+            services.ConfigureApplicationCookie(r =>
+            {
+                r.Cookie.HttpOnly = true;
+                r.Cookie.Name = "IdentityCookie";
+                r.Cookie.SameSite = SameSiteMode.Strict;
+                r.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                r.ExpireTimeSpan = TimeSpan.FromDays(30);
+
+            });
+
             services.AddControllersWithViews();
         }
 

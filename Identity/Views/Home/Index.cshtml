@@ -12,7 +12,7 @@
     <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <form class="w-50 mx-auto p-4 mt-3 shadow" asp-action="SignIn">
+    <form class="w-50 mx-auto p-4 mt-3 shadow" asp-action="SignIn" method="post">
         <h4 class="text-center lead">Giriş Yap</h4>
         <div class="form-group ">
             <label asp-for="@Model.UserName"></label>
@@ -23,6 +23,14 @@
             <label asp-for="@Model.Password"></label>
             <span asp-validation-for="@Model.Password" class="text-danger"></span>
             <input asp-for="@Model.Password" class="form-control" />
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" asp-for="@Model.RememberMe" class="form-check-input" />
+            <label class="form-check-label" asp-for="@Model.RememberMe">Bilgilerimi Hatırla!</label>
+        </div>
+        <div class="text-danger" asp-validation-summary="All">
+
         </div>
         <div class="form-group text-center">
             <input type="submit" class="btn btn-primary" value="Giriş" />

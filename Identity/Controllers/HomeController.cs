@@ -27,12 +27,20 @@ namespace Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var identityResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                var identityResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, true);
+                if (identityResult.IsLockedOut)
+                {
+                    var donentarih = await _userManager.GetLockoutEndDateAsync(await _userManager.FindByNameAsync(model.UserName));
+                    var kalandk = donentarih.Value.Minute - DateTime.Now.Minute;
+                    ModelState.AddModelError("",$"5 kere yanlış girdiğin için hesap kilitlendi {kalandk} dakika sonra giriş yapabilirsiniz");
+                    return View("Index", model);
+                }
                 if (identityResult.Succeeded)
                 {
                     return RedirectToAction("Index", "Panel");
                 }
-                ModelState.AddModelError("", "Kullanıcı adı veya şifre hatalıı");
+                var yanlissayisi = await _userManager.GetAccessFailedCountAsync(await _userManager.FindByNameAsync(model.UserName));
+                ModelState.AddModelError("", $"Kullanıcı adı veya şifre hatalı {5-yanlissayisi} kere daha yanlış girerseniz hesap kilitlenecek");
             }
             return View("Index",model);
         }
