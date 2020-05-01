@@ -31,20 +31,26 @@ namespace Identity
 
                     //r.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                     //r.Lockout.MaxFailedAccessAttempts = 5;
+
+                    //r.SignIn.RequireConfirmedEmail = true;
                 }
-                ).AddErrorDescriber<CustomIdentityValidator>().AddPasswordValidator<CustomPasswordValidator>().AddEntityFrameworkStores<UdemyContext>();
+                ).AddErrorDescriber<CustomIdentityValidator>().AddPasswordValidator<CustomPasswordValidator>()
+                .AddEntityFrameworkStores<UdemyContext>();
 
             services.ConfigureApplicationCookie(r =>
             {
                 r.LoginPath = new PathString("/Home/Index");
                 r.Cookie.HttpOnly = true;
+                r.AccessDeniedPath = new PathString("/Home/AccessDenied");
                 r.Cookie.Name = "IdentityCookie";
                 r.Cookie.SameSite = SameSiteMode.Strict;
                 r.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 r.ExpireTimeSpan = TimeSpan.FromDays(30);
 
             });
-
+            services.AddAuthorization(x=> {
+                x.AddPolicy("FemalePolicy", cnf => { cnf.RequireClaim("gender", "female"); });
+            });
             services.AddControllersWithViews();
         }
 

@@ -35,6 +35,11 @@ namespace Identity.Controllers
                     ModelState.AddModelError("",$"5 kere yanlış girdiğin için hesap kilitlendi {kalandk} dakika sonra giriş yapabilirsiniz");
                     return View("Index", model);
                 }
+                /*if (identityResult.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", $"Email adresinizi lütfen doğrulayınız");
+                    return View("Index", model);
+                }*/
                 if (identityResult.Succeeded)
                 {
                     return RedirectToAction("Index", "Panel");
@@ -43,6 +48,10 @@ namespace Identity.Controllers
                 ModelState.AddModelError("", $"Kullanıcı adı veya şifre hatalı {5-yanlissayisi} kere daha yanlış girerseniz hesap kilitlenecek");
             }
             return View("Index",model);
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
         public IActionResult SignUp()
         {

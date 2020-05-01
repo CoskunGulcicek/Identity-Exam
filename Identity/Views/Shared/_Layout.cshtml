@@ -14,14 +14,30 @@
                     <a asp-action="UpdateUser" asp-controller="Panel" class="list-group-item list-group-item-action">
                         Bilgilerimi Güncelle
                     </a>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                    <a asp-action="Index" asp-controller="Rol" class="list-group-item list-group-item-action">
+                        Rol İşlemleri
+                    </a>
+                    <a asp-action="UserList" asp-controller="Rol" class="list-group-item list-group-item-action">
+                        Kullanıcı İşlemleri
+                    </a>
+                    <a asp-action="Index" asp-controller="Admin" class="list-group-item list-group-item-action">
+                        Admin Sayfası
+                    </a>
+                    <a asp-action="Index" asp-controller="Developer" class="list-group-item list-group-item-action">
+                        Developer Sayfası
+                    </a>
+                    <a asp-action="Index" asp-controller="Female" class="list-group-item list-group-item-action">
+                        For Womans
+                    </a>
+                    <a asp-action="LogOut" asp-controller="Panel" class="list-group-item list-group-item-action">
+                        Çıkış Yap
+                    </a>
+
+
                 </ul>
             </div>
             <div class="col-md-4">
-                @RenderBody();
+                @RenderBody()
             </div>
         </div>
     </div>

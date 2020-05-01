@@ -12,13 +12,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace Identity.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class PanelController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-
-        public PanelController(UserManager<AppUser> userManager)
+        private readonly SignInManager<AppUser> _signInManager;
+        public PanelController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> Index()
@@ -84,5 +86,12 @@ namespace Identity.Controllers
 
             return View();
         }
+        public async Task<IActionResult> LogOut()
+        {
+
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index","Home");
+        }
+        
     }
 }
