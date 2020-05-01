@@ -18,7 +18,17 @@ namespace Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<UdemyContext>();
-            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<UdemyContext>();
+            services.AddIdentity<AppUser, AppRole>(
+                r =>
+                {
+                    //aþaðýdaki kontrolleri þifreyi 1 veye basit bir þey verip hýzlýca giriþ yapmak için ekledim yani kontrolleri esnettim
+                    r.Password.RequireDigit = false;
+                    r.Password.RequireLowercase = false;
+                    r.Password.RequiredLength = 1;
+                    r.Password.RequireNonAlphanumeric = false;
+                    r.Password.RequireUppercase = false;
+                }
+                ).AddEntityFrameworkStores<UdemyContext>();
             services.AddControllersWithViews();
         }
 
