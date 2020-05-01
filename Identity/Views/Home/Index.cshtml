@@ -1,4 +1,4 @@
-﻿
+﻿@model UserSignInViewModel
 @{
     Layout = null;
 }
@@ -12,9 +12,19 @@
     <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <form class="w-75 mx-auto p-4 mt-3 shadow" asp-action="KayitOl">
+    <form class="w-50 mx-auto p-4 mt-3 shadow" asp-action="SignIn">
+        <h4 class="text-center lead">Giriş Yap</h4>
+        <div class="form-group ">
+            <input asp-for="@Model.UserName" class="form-control" />
+        </div>
         <div class="form-group">
-
+            <input asp-for="@Model.Password" class="form-control" />
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" class="btn btn-primary" value="Giriş" />
+        </div>
+        <div class="form-group text-center">
+            <small>Henüz Hesabınız Yok mu?</small><a asp-action="SignUp" class="btn btn-link">Kayıt Ol</a>
         </div>
     </form>
 </body>

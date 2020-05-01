@@ -1,0 +1,43 @@
+﻿@model UserSignUpViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SignUp</title>
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <form class="w-50 mx-auto p-4 mt-3 shadow" asp-action="SignUp">
+        <h4 class="text-center lead">Kayıt Ol</h4>
+        <div class="form-group ">
+            <input asp-for="@Model.Name" class="form-control" />
+        </div>
+        <div class="form-group ">
+            <input asp-for="@Model.SurName" class="form-control" />
+        </div>
+        <div class="form-group ">
+            <input asp-for="@Model.UserName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input asp-for="@Model.Password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input asp-for="@Model.ConfirmPassword" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input asp-for="@Model.Email" class="form-control" />
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" class="btn btn-primary" value="Kayıt Ol" />
+        </div>
+        <div class="form-group text-center">
+            <small>Hesabınız varsa ?</small><a asp-action="Index" class="btn btn-link">Giriş Yap</a>
+        </div>
+    </form>
+</body>
+</html>
